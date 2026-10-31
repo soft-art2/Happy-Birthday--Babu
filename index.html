@@ -1,0 +1,1122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>A Birthday Journey - For Muslim Uddin Babu 🎈</title>
+  <meta name="description" content="An interactive birthday journey for Muslim Uddin Babu, with a wish cake, 8 reasons, coupons, heart catching mini-game, and love letter.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Canvas Confetti CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.4/dist/confetti.browser.min.js"></script>
+  <style>
+    :root {
+      --bg: #fff8f3;
+      --card: #ffffff;
+      --line: #ffd3e2;
+      --text: #5a2448;
+      --soft: #8c5b78;
+      --pink: #ff5c93;
+      --rose: #e8467c;
+      --gold: #f59e0b;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      color: var(--text);
+      background-color: var(--bg);
+      background-image:
+        radial-gradient(900px 600px at 0% 0%, #ffe0ee 0%, transparent 60%),
+        radial-gradient(900px 600px at 100% 100%, #d9f1ff 0%, transparent 60%),
+        radial-gradient(700px 500px at 100% 0%, #fff0b8 0%, transparent 60%);
+      background-attachment: fixed;
+      overflow-x: hidden;
+      padding-bottom: 60px;
+    }
+
+    /* Fixed Top Navigation Bar */
+    header {
+      position: sticky;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: rgba(255, 248, 243, 0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--line);
+      z-index: 50;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .brand {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 1.15rem;
+      color: var(--text);
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .nav-links {
+      display: flex;
+      gap: 18px;
+    }
+    .nav-links a {
+      color: var(--soft);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--rose); }
+    .nav-actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .icon-btn {
+      background: #fff;
+      border: 1px solid var(--line);
+      color: var(--soft);
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.2s;
+    }
+    .icon-btn.active {
+      background: #ffe4ee;
+      color: var(--rose);
+      border-color: #ff8fab;
+    }
+    .celebrate-btn {
+      background: linear-gradient(135deg, #ff6f9f, #ff9e5e);
+      color: #fff;
+      border: 0;
+      padding: 7px 16px;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(255, 92, 147, 0.3);
+      transition: transform 0.2s;
+    }
+    .celebrate-btn:active { transform: scale(0.96); }
+
+    /* Decorative Pennant Flags */
+    .flags {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      padding: 24px 0 10px;
+    }
+    .flags i {
+      width: 0;
+      height: 0;
+      border-left: 14px solid transparent;
+      border-right: 14px solid transparent;
+      border-top: 28px solid var(--c);
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.06));
+    }
+
+    /* Standardized Card Sections */
+    section {
+      max-width: 580px;
+      margin: 28px auto;
+      padding: 48px 24px 38px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      position: relative;
+      background: rgba(255, 255, 255, 0.92);
+      border: 2px solid #ffffff;
+      border-radius: 36px;
+      box-shadow: 0 16px 40px rgba(232, 70, 124, 0.12);
+    }
+    section::before {
+      content: attr(data-chapter);
+      position: absolute;
+      top: -14px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(135deg, #ff8fb8, #ffb86b);
+      color: #fff;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 6px 18px;
+      border-radius: 999px;
+      box-shadow: 0 6px 14px rgba(255, 92, 147, 0.3);
+      white-space: nowrap;
+    }
+
+    h1, h2 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: var(--text);
+    }
+    h1 { font-size: clamp(2.4rem, 8vw, 3.8rem); line-height: 1.15; }
+    h2 { font-size: clamp(1.8rem, 6vw, 2.3rem); margin-bottom: 8px; }
+    em {
+      font-style: italic;
+      color: var(--pink);
+      background: linear-gradient(135deg, #ff5c93, #ff9e5e);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    p.lead {
+      color: var(--soft);
+      line-height: 1.6;
+      font-size: 0.95rem;
+      max-width: 44ch;
+      margin: 6px auto 20px;
+    }
+    .btn-main {
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 600;
+      padding: 13px 32px;
+      border: 0;
+      border-radius: 999px;
+      color: #fff;
+      background: linear-gradient(135deg, #ff6f9f, #ff9e5e);
+      box-shadow: 0 8px 20px rgba(255, 92, 147, 0.35);
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-main:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 24px rgba(255, 92, 147, 0.45);
+    }
+    .btn-main:active { transform: scale(0.97); }
+
+    /* Chapter 1: Cake */
+    .cake-container {
+      position: relative;
+      width: 240px;
+      height: 250px;
+      margin: 10px 0 20px;
+      user-select: none;
+    }
+    .candle {
+      position: absolute;
+      bottom: 180px;
+      left: 50%;
+      width: 12px;
+      height: 44px;
+      margin-left: -6px;
+      background: repeating-linear-gradient(135deg, #fff 0 6px, #6cc4ff 6px 12px);
+      border-radius: 3px;
+      z-index: 10;
+    }
+    .flame {
+      position: absolute;
+      bottom: 226px;
+      left: 50%;
+      margin-left: -10px;
+      width: 20px;
+      height: 32px;
+      background: radial-gradient(ellipse at 50% 70%, #fff, #ffd166 40%, #ff4d00 85%);
+      border-radius: 50% 50% 35% 35%;
+      filter: drop-shadow(0 0 14px #ffb347);
+      animation: flame-flicker 0.4s infinite alternate ease-in-out;
+      cursor: pointer;
+      z-index: 15;
+      transition: opacity 0.5s, transform 0.5s;
+    }
+    .flame::after {
+      content: '';
+      position: absolute;
+      inset: -14px;
+    }
+    @keyframes flame-flicker {
+      to { transform: scale(1.12, 0.94) rotate(3deg); filter: drop-shadow(0 0 20px #ff9e5e); }
+    }
+    .flame.out {
+      opacity: 0;
+      transform: translateY(-15px) scale(0.3);
+      pointer-events: none;
+    }
+    .tier {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      border-radius: 16px 16px 12px 12px;
+      box-shadow: 0 6px 14px rgba(232, 70, 124, 0.15);
+    }
+    .t1 { width: 220px; height: 74px; bottom: 0; background: linear-gradient(#ff9ec4, #e0457b); }
+    .t2 { width: 170px; height: 64px; bottom: 74px; background: linear-gradient(#ffd6e7, #ff8fba); }
+    .t3 { width: 120px; height: 50px; bottom: 138px; background: linear-gradient(#fff1c9, #ffd166); }
+    .drip {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 15px;
+      background: #ffffff;
+      opacity: 0.95;
+      border-radius: 14px 14px 40% 40%;
+    }
+    .wish-text {
+      min-height: 3em;
+      color: var(--text);
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      font-weight: 600;
+      margin-top: 10px;
+    }
+
+    /* Chapter 2: 8 Reasons 3D Flip Cards */
+    .grid-cards {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      width: 100%;
+      margin-top: 10px;
+    }
+    .fc {
+      perspective: 1000px;
+      height: 190px;
+      cursor: pointer;
+    }
+    .fi {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      transform-style: preserve-3d;
+    }
+    .fc.flip .fi {
+      transform: rotateY(180deg);
+    }
+    .fc div.f, .fc div.b {
+      position: absolute;
+      inset: 0;
+      backface-visibility: hidden;
+      border-radius: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      border: 2px solid #ffffff;
+      box-shadow: 0 6px 14px rgba(232, 70, 124, 0.08);
+    }
+    .f { font-size: 2.6rem; }
+    .fc:nth-child(4n+1) .f { background: #ffe3ee; }
+    .fc:nth-child(4n+2) .f { background: #fff0c2; }
+    .fc:nth-child(4n+3) .f { background: #d9f1ff; }
+    .fc:nth-child(4n) .f { background: #e6e0ff; }
+    .f .hint {
+      font-size: 0.72rem;
+      color: var(--soft);
+      margin-top: 8px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+    .b {
+      font-size: 0.85rem;
+      line-height: 1.5;
+      background: linear-gradient(135deg, #ff7aa8, #ffa45e);
+      color: #fff;
+      transform: rotateY(180deg);
+      text-align: left;
+      justify-content: space-between;
+    }
+    .b-header {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      opacity: 0.85;
+      width: 100%;
+      border-bottom: 1px solid rgba(255,255,255,0.3);
+      padding-bottom: 4px;
+    }
+
+    /* Chapter 3: Coupons */
+    .coupon-card {
+      width: 100%;
+      min-height: 140px;
+      border: 2px dashed #ff9e5e;
+      border-radius: 22px;
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #fff7df, #ffe6ef);
+      box-shadow: 0 8px 20px rgba(232, 70, 124, 0.08);
+      position: relative;
+      margin: 12px 0 16px;
+      transition: transform 0.3s;
+    }
+    .coupon-card.pop {
+      transform: scale(1.03) rotate(-1.5deg);
+    }
+    .coupon-code {
+      font-family: monospace;
+      font-size: 0.75rem;
+      color: var(--rose);
+      background: #ffffff;
+      padding: 3px 8px;
+      border-radius: 4px;
+      border: 1px solid #ffd3e2;
+      margin-bottom: 8px;
+    }
+    .coupon-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    /* Chapter 4: Falling Heart Mini-Game */
+    #arena {
+      position: relative;
+      width: 100%;
+      height: 360px;
+      border: 2px solid var(--line);
+      border-radius: 24px;
+      background: linear-gradient(#fff0f6, #f2f8ff, #eaf6ff);
+      overflow: hidden;
+      touch-action: manipulation;
+      box-shadow: inset 0 2px 8px rgba(0,0,0,0.04);
+      margin: 12px 0;
+    }
+    .heart-target {
+      position: absolute;
+      top: -50px;
+      width: 48px;
+      height: 48px;
+      font-size: 2.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      user-select: none;
+      cursor: pointer;
+      animation: fall linear forwards;
+    }
+    @keyframes fall {
+      0% { transform: translateY(0); opacity: 1; }
+      85% { opacity: 1; }
+      100% { transform: translateY(420px); opacity: 0.3; }
+    }
+    .hud-bar {
+      display: flex;
+      justify-content: space-around;
+      width: 100%;
+      padding: 8px 14px;
+      border-radius: 16px;
+      background: #fff0f6;
+      border: 1px solid #ffd3e2;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .hud-bar b {
+      color: var(--rose);
+      font-family: monospace;
+      font-size: 1.15rem;
+    }
+
+    /* Chapter 5: Love Letter */
+    .envelope-box {
+      width: 100%;
+      cursor: pointer;
+      position: relative;
+      margin: 10px 0;
+    }
+    .env-flap {
+      height: 150px;
+      background: linear-gradient(135deg, #ffb3cf, #ff8fb8);
+      border-radius: 22px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 3.2rem;
+      box-shadow: 0 12px 28px rgba(232, 70, 124, 0.25);
+      border: 2px solid #ffffff;
+      transition: transform 0.3s;
+    }
+    .env-flap:hover { transform: scale(1.02); }
+    .env-flap span {
+      font-size: 0.85rem;
+      color: #ffffff;
+      font-weight: 600;
+      margin-top: 6px;
+    }
+    .letter-paper {
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+      transition: max-height 1.4s ease, opacity 1s ease;
+      background: repeating-linear-gradient(#fffdf9 0 32px, #fce7f0 32px 33px);
+      color: #4a2340;
+      border: 2px solid #ffd3e2;
+      border-radius: 20px;
+      text-align: left;
+      line-height: 1.8;
+      font-size: 1.05rem;
+      font-family: 'Playfair Display', serif;
+    }
+    .letter-paper.open {
+      max-height: 5000px;
+      opacity: 1;
+      margin-top: 18px;
+      padding: 30px 24px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+    }
+
+    /* Floating ambient balloons */
+    .ambient-balloon {
+      position: fixed;
+      bottom: -80px;
+      font-size: 2.6rem;
+      animation: rise-balloon linear forwards;
+      z-index: 10;
+      pointer-events: auto;
+      cursor: pointer;
+      user-select: none;
+    }
+    @keyframes rise-balloon {
+      to { transform: translateY(-130vh) rotate(14deg); }
+    }
+
+    @media (max-width: 600px) {
+      .nav-links { display: none; }
+      .grid-cards { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sticky Top Header -->
+  <header>
+    <a href="#hero" class="brand">A Birthday Journey · Babu</a>
+    <nav class="nav-links">
+      <a href="#cake">The Wish</a>
+      <a href="#reasons">8 Reasons</a>
+      <a href="#coupons">Coupons</a>
+      <a href="#game">Heart Game</a>
+      <a href="#letter">Love Letter</a>
+    </nav>
+    <div class="nav-actions">
+      <button class="icon-btn" id="musicBtn" onclick="toggleMusic()">🎵 Music</button>
+      <button class="celebrate-btn" onclick="fireBurst()">Celebrate 🎈</button>
+    </div>
+  </header>
+
+  <!-- Pennant Garland -->
+  <div class="flags">
+    <i style="--c:#ff7aa8"></i>
+    <i style="--c:#ffd166"></i>
+    <i style="--c:#6cc4ff"></i>
+    <i style="--c:#b69cff"></i>
+    <i style="--c:#7bd88f"></i>
+    <i style="--c:#ff9e5e"></i>
+    <i style="--c:#ff7aa8"></i>
+  </div>
+
+  <!-- Hero Section -->
+  <section id="hero" data-chapter="Happy Birthday">
+    <div style="font-size: 3.5rem; cursor: pointer;" onclick="fireBurst()" title="Tap for celebration!">🎈</div>
+    <h1>Happy Birthday,<br><em id="recipientName">Handsome</em></h1>
+    <p class="lead" id="heroSubtitle">
+      For Muslim Uddin Babu, my Handsome. Scroll slowly, there's a lot inside.
+    </p>
+    <button class="btn-main" onclick="goTo('cake')">Start your surprise 🎁</button>
+    <div style="margin-top: 18px; font-size: 1.5rem; color: var(--pink); animation: bob 1.6s infinite;">⌄</div>
+  </section>
+
+  <!-- Chapter 1: The Wish (Cake) -->
+  <section id="cake" data-chapter="1 · The Wish">
+    <h2>First, make a wish</h2>
+    <p class="lead">Tap the glowing flame, close your eyes, and think of something big.</p>
+    <div class="cake-container">
+      <div class="candle"></div>
+      <div class="flame" id="flame" onclick="blowCandle()" title="Tap to blow out the flame!"></div>
+      <div class="tier t3"><div class="drip"></div></div>
+      <div class="tier t2"><div class="drip"></div></div>
+      <div class="tier t1"><div class="drip"></div></div>
+    </div>
+    <div class="wish-text" id="wishText"></div>
+    <button class="btn-main" id="relightBtn" style="display:none; margin-top:14px;" onclick="relightCandle()">Relight Candle 🕯️</button>
+  </section>
+
+  <!-- Chapter 2: 8 Reasons -->
+  <section id="reasons" data-chapter="2 · 8 Reasons">
+    <h2>8 reasons you’re <em>amazing</em></h2>
+    <p class="lead">Tap each card to flip it over and read what makes you irreplaceable.</p>
+    <div style="display:flex; justify-content:space-between; width:100%; margin-bottom:8px; font-size:0.85rem; color:var(--soft);">
+      <span id="revealedCount">0 of 8 revealed</span>
+      <button onclick="flipAll()" style="background:none; border:none; color:var(--rose); font-weight:600; cursor:pointer;">Flip all</button>
+    </div>
+    <div class="grid-cards" id="reasonsGrid"></div>
+  </section>
+
+  <!-- Chapter 3: Coupons -->
+  <section id="coupons" data-chapter="3 · Coupons">
+    <h2>Your birthday coupons 🎟️</h2>
+    <p class="lead">Dispensing one by one, step-by-step. Each coupon is 100% valid with lifetime guarantee and no expiry date.</p>
+
+    <!-- Counting & Progress HUD -->
+    <div style="width:100%; background:#fff5f8; border:1px solid #ffd3e2; border-radius:18px; padding:12px 16px; margin-bottom:14px; text-align:left;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; font-size:0.85rem;">
+        <span id="couponCountBadge" style="font-weight:700; color:var(--rose); background:#fff; padding:3px 10px; border-radius:999px; border:1px solid #ffccd5; font-family:monospace;">
+          Coupon 1 of 12
+        </span>
+        <div style="display:flex; align-items:center; gap:6px;">
+          <button id="prevCouponBtn" onclick="prevCoupon()" style="background:#fff; border:1px solid #ffd3e2; border-radius:8px; padding:2px 8px; cursor:pointer; font-weight:600; color:var(--text);" title="Previous coupon">◀</button>
+          <span id="couponStepFraction" style="font-family:monospace; font-weight:600; font-size:0.82rem; color:var(--text);">1 / 12</span>
+          <button id="nextCouponBtn" onclick="nextCouponStep()" style="background:#fff; border:1px solid #ffd3e2; border-radius:8px; padding:2px 8px; cursor:pointer; font-weight:600; color:var(--text);" title="Next coupon">▶</button>
+        </div>
+      </div>
+      <!-- 12-Step Indicator Dots -->
+      <div id="couponDotsGrid" style="display:grid; grid-template-columns:repeat(12, 1fr); gap:4px; width:100%;"></div>
+    </div>
+
+    <!-- Active Coupon Voucher Card -->
+    <div class="coupon-card" id="couponBox">
+      <div style="display:flex; justify-content:space-between; width:100%; border-bottom:1px dashed rgba(255,158,94,0.4); padding-bottom:8px; margin-bottom:10px; font-size:0.75rem; font-family:monospace; color:var(--soft);">
+        <span style="font-weight:700; color:var(--rose);" id="couponStepLabel">OFFICIAL BIRTHDAY PASS #1</span>
+        <span class="coupon-code" id="couponCode">BDAY-HUG-01</span>
+      </div>
+      <div class="coupon-title" id="couponTitle">Free hugs, no refunds 🤗</div>
+      <div style="font-size:0.78rem; color:var(--soft); margin-top:8px;">
+        Redeemable by: <strong style="color:var(--rose);">Muslim Uddin Babu</strong> · Issued by: <strong style="color:var(--rose);">Sononono</strong>
+      </div>
+      <div style="display:flex; justify-content:space-between; width:100%; border-top:1px dashed rgba(255,158,94,0.4); padding-top:8px; margin-top:12px; font-size:0.75rem; color:var(--soft);">
+        <span style="color:var(--gold); font-weight:600;">✨ STEP 1 OF 12 · NO EXPIRY</span>
+        <button onclick="copyCurrentCoupon()" style="background:#fff; border:1px solid #ffd3e2; border-radius:6px; padding:2px 8px; font-size:0.75rem; color:var(--text); cursor:pointer;">Copy 📋</button>
+      </div>
+    </div>
+
+    <!-- "Up Next" Teaser Box -->
+    <div id="upNextBox" style="width:100%; background:rgba(255,255,255,0.85); border:1px solid #ffd3e2; border-radius:14px; padding:10px 14px; text-align:left; display:flex; justify-content:space-between; align-items:center; gap:8px; margin-bottom:14px; font-size:0.82rem;">
+      <div style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
+        <span style="font-size:0.7rem; font-weight:700; background:#ffe4ee; color:var(--rose); padding:2px 6px; border-radius:4px; text-transform:uppercase; margin-right:6px;">Up Next</span>
+        <span id="upNextText" style="color:var(--text); font-weight:500;">One free forehead kiss whenever your brain starts buffering 😚🧠</span>
+      </div>
+      <button onclick="pullNextCouponStep()" style="background:none; border:none; color:var(--rose); font-weight:700; font-size:0.78rem; cursor:pointer; white-space:nowrap;">Pull now →</button>
+    </div>
+
+    <!-- Actions -->
+    <div style="display:flex; gap:8px; align-items:center; justify-content:center; flex-wrap:wrap;">
+      <button class="icon-btn" onclick="prevCoupon()">◀ Prev</button>
+      <button class="btn-main" id="pullBtn" onclick="pullNextCouponStep()">Pull Next: Coupon #2 →</button>
+      <button class="icon-btn" onclick="nextCouponStep()">Next ▶</button>
+    </div>
+  </section>
+
+  <!-- Chapter 4: Catch the Hearts Mini-Game -->
+  <section id="game" data-chapter="4 · Heart Game">
+    <h2>Catch the hearts 💗</h2>
+    <p class="lead">20 seconds on the clock. Tap falling hearts & gifts as fast as you can!</p>
+    <div class="hud-bar">
+      <span>Score: <b id="scoreDisplay">0</b></span>
+      <span>Time: <b id="timeDisplay">20</b>s</span>
+      <span>Best: <b id="bestDisplay">0</b></span>
+    </div>
+    <div id="arena"></div>
+    <button class="btn-main" id="gameBtn" onclick="toggleGame()">Start Game 🎮</button>
+    <p id="gameMessage" style="min-height: 2.2em; font-weight: 600; color: var(--rose); margin-top: 10px;"></p>
+  </section>
+
+  <!-- Chapter 5: Love Letter -->
+  <section id="letter" data-chapter="5 · The Letter">
+    <h2>One last thing</h2>
+    <p class="lead">There’s a personal letter written just for you. Tap the envelope to read it.</p>
+    <div class="envelope-box" onclick="openLetter()">
+      <div class="env-flap" id="envFlap">
+        💌
+        <span>Tap to break wax seal & open</span>
+      </div>
+      <div class="letter-paper" id="letterPaper">
+        <div id="letterContent" style="white-space: pre-wrap;"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer style="text-align: center; margin-top: 40px; color: var(--soft); font-size: 0.85rem;">
+    <button class="btn-main" onclick="fireFireworks()" style="margin-bottom: 24px;">Launch Grand Fireworks Finale 🎆</button>
+    <p>Handcrafted with all my love for <strong>Muslim Uddin Babu</strong> 💖</p>
+    <p style="margin-top: 4px; font-style: italic;">From Your Sononono</p>
+  </footer>
+
+  <script>
+    // Audio synthesizer via Web Audio API
+    let audioCtx = null;
+    function getAudioCtx() {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+      return audioCtx;
+    }
+
+    function playTone(freq, duration = 0.2, type = 'sine') {
+      try {
+        const ctx = getAudioCtx();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, ctx.currentTime);
+        gain.gain.setValueAtTime(0.12, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duration);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + duration);
+      } catch(e) {}
+    }
+
+    // Music box melody
+    let isMusicPlaying = false;
+    let musicInterval = null;
+    const melody = [523.25, 523.25, 587.33, 523.25, 698.46, 659.25, 523.25, 523.25, 587.33, 523.25, 783.99, 698.46];
+    let noteIdx = 0;
+
+    function toggleMusic() {
+      const btn = document.getElementById('musicBtn');
+      if (isMusicPlaying) {
+        clearInterval(musicInterval);
+        isMusicPlaying = false;
+        btn.classList.remove('active');
+        btn.textContent = '🎵 Music';
+      } else {
+        isMusicPlaying = true;
+        btn.classList.add('active');
+        btn.textContent = '🎶 Playing';
+        musicInterval = setInterval(() => {
+          playTone(melody[noteIdx % melody.length], 0.35, 'triangle');
+          noteIdx++;
+        }, 450);
+      }
+    }
+
+    // Smooth navigation
+    function goTo(id) {
+      document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Confetti bursts
+    function fireBurst(x = 0.5, y = 0.5) {
+      if (window.confetti) {
+        confetti({
+          particleCount: 80,
+          spread: 70,
+          origin: { x, y },
+          colors: ['#ff7aa8', '#ffd166', '#6cc4ff', '#b69cff', '#7bd88f', '#ff9e5e']
+        });
+      }
+    }
+
+    function fireFireworks() {
+      if (!window.confetti) return;
+      const end = Date.now() + 2500;
+      const interval = setInterval(() => {
+        if (Date.now() > end) return clearInterval(interval);
+        confetti({
+          startVelocity: 30,
+          spread: 360,
+          ticks: 60,
+          origin: { x: Math.random(), y: Math.random() - 0.2 },
+          colors: ['#ff5c93', '#ffd166', '#4cc9f0', '#b5179e']
+        });
+      }, 350);
+    }
+
+    // Personalization via hash (e.g. #Babu or #Handsome)
+    const rawHash = decodeURIComponent((location.hash || '').replace('#', '')).trim();
+    if (rawHash) {
+      document.getElementById('recipientName').textContent = rawHash;
+    }
+
+    // Cake Wish Logic
+    let candleBlown = false;
+    function blowCandle() {
+      if (candleBlown) return;
+      candleBlown = true;
+      document.getElementById('flame').classList.add('out');
+      playTone(600, 0.4, 'triangle');
+      setTimeout(() => playTone(800, 0.5, 'sine'), 100);
+      fireBurst(0.5, 0.4);
+
+      const text = 'May every wish you just made come true ✨';
+      const el = document.getElementById('wishText');
+      el.textContent = '';
+      let i = 0;
+      const ty = setInterval(() => {
+        el.textContent = text.slice(0, ++i);
+        if (i >= text.length) {
+          clearInterval(ty);
+          document.getElementById('relightBtn').style.display = 'inline-block';
+        }
+      }, 45);
+    }
+
+    function relightCandle() {
+      candleBlown = false;
+      document.getElementById('flame').classList.remove('out');
+      document.getElementById('wishText').textContent = '';
+      document.getElementById('relightBtn').style.display = 'none';
+      playTone(450, 0.2);
+    }
+
+    // 8 Reasons Cards
+    const reasons = [
+      ["🌍", "Selfless Presence", "You know how to make life easier for others, even if you don't realize how complicated mine feels."],
+      ["😜", "Selectively Observant", "You learn things so quickly, understand people so well, and somehow notice everything except the little things about me. 😂"],
+      ["💪", "Quiet Resilience", "You have a strong personality and the courage to face life's challenges."],
+      ["🧠", "Gentle Kindness", "You treat people with kindness, and that's one of the best things about you."],
+      ["🎯", "Unwavering Focus", "You're focused, determined, and know how to handle things in your own way."],
+      ["🫶", "Genuine Soul", "You have a genuinely good heart, and your actions often speak louder than words."],
+      ["🦋", "Lifelong Wisdom", "You have the ability to learn from experiences and become wiser with time."],
+      ["❤️", "Irreplaceable One", "You're a genuinely nice guy with a strong personality, a sharp mind, and a heart worth appreciating."]
+    ];
+
+    const grid = document.getElementById('reasonsGrid');
+    let flippedCount = 0;
+    reasons.forEach((r, idx) => {
+      const card = document.createElement('div');
+      card.className = 'fc';
+      card.innerHTML = `
+        <div class="fi">
+          <div class="f">
+            <span>${r[0]}</span>
+            <span class="hint">Tap to flip</span>
+          </div>
+          <div class="b">
+            <span class="b-header">#0${idx + 1} · ${r[1]}</span>
+            <p>${r[2]}</p>
+            <span style="font-size:0.7rem; opacity:0.8; text-align:right;">Sononono's truth</span>
+          </div>
+        </div>
+      `;
+      card.onclick = () => {
+        card.classList.toggle('flip');
+        playTone(380, 0.1);
+        updateFlippedCount();
+      };
+      grid.appendChild(card);
+    });
+
+    function updateFlippedCount() {
+      const all = document.querySelectorAll('.fc.flip').length;
+      document.getElementById('revealedCount').textContent = `${all} of 8 revealed`;
+      if (all === 8) fireBurst(0.5, 0.6);
+    }
+
+    function flipAll() {
+      document.querySelectorAll('.fc').forEach(c => c.classList.add('flip'));
+      updateFlippedCount();
+    }
+
+    // Birthday Coupons
+    const coupons = [
+      { code: "BDAY-HUG-01", text: "Free hugs, no refunds 🤗" },
+      { code: "BDAY-KISS-02", text: "One free forehead kiss whenever your brain starts buffering 😚🧠" },
+      { code: "BDAY-FILM-03", text: "Your choice, my complaints 🎬😂" },
+      { code: "BDAY-FOOD-04", text: "Unlimited food theft 🍟" },
+      { code: "BDAY-HYPE-05", text: "One personal hype session. You're the hottest man alive." },
+      { code: "BDAY-MASS-06", text: "10-minute massage, 2-minute effort 💆" },
+      { code: "BDAY-ROYL-07", text: "One day of royal treatment 👑" },
+      { code: "BDAY-BEBS-08", text: "One free \"Yes Bebs\" 😘" },
+      { code: "BDAY-TEXT-09", text: "Unlimited annoying texts 📱" },
+      { code: "BDAY-CALM-10", text: "One free anger management session, for me 😂" },
+      { code: "BDAY-CUDL-11", text: "Cuddles, even during my villain era 😈" },
+      { code: "BDAY-SORY-12", text: "One free apology, even when you're guilty 🤡" }
+    ];
+
+    // Birthday Coupons (Step-by-Step with Counting & Up Next)
+    let currentCouponIdx = 0;
+    let maxCouponUnlocked = 0;
+
+    function renderCouponDots() {
+      const dotsContainer = document.getElementById('couponDotsGrid');
+      if (!dotsContainer) return;
+      dotsContainer.innerHTML = '';
+      coupons.forEach((c, i) => {
+        const dot = document.createElement('div');
+        dot.style.height = '6px';
+        dot.style.borderRadius = '999px';
+        dot.style.cursor = 'pointer';
+        dot.style.transition = 'all 0.2s';
+        if (i === currentCouponIdx) {
+          dot.style.background = 'var(--rose)';
+          dot.style.transform = 'scaleY(1.4)';
+        } else if (i <= maxCouponUnlocked) {
+          dot.style.background = 'var(--gold)';
+        } else {
+          dot.style.background = '#ffd3e2';
+        }
+        dot.title = `Coupon ${i + 1}: ${c.text}`;
+        dot.onclick = () => selectCoupon(i);
+        dotsContainer.appendChild(dot);
+      });
+    }
+
+    function updateCouponUI() {
+      const c = coupons[currentCouponIdx];
+      document.getElementById('couponCountBadge').textContent = `Coupon ${currentCouponIdx + 1} of ${coupons.length}`;
+      document.getElementById('couponStepFraction').textContent = `${currentCouponIdx + 1} / ${coupons.length}`;
+      document.getElementById('couponStepLabel').textContent = `OFFICIAL BIRTHDAY PASS #${currentCouponIdx + 1}`;
+      document.getElementById('couponCode').textContent = c.code;
+      document.getElementById('couponTitle').textContent = c.text;
+
+      // Update Prev / Next button states
+      document.getElementById('prevCouponBtn').style.opacity = currentCouponIdx === 0 ? '0.35' : '1';
+      document.getElementById('nextCouponBtn').style.opacity = currentCouponIdx === coupons.length - 1 ? '0.35' : '1';
+
+      // Pull button label
+      const pullBtn = document.getElementById('pullBtn');
+      if (currentCouponIdx === coupons.length - 1) {
+        pullBtn.textContent = 'Restart from Coupon #1 ↺';
+      } else {
+        pullBtn.textContent = `Pull Next: Coupon #${currentCouponIdx + 2} →`;
+      }
+
+      // Up Next Preview Box
+      const nextIdx = currentCouponIdx + 1;
+      const upNextBox = document.getElementById('upNextBox');
+      const upNextText = document.getElementById('upNextText');
+      if (nextIdx < coupons.length) {
+        upNextBox.style.display = 'flex';
+        upNextText.textContent = `Coupon #${nextIdx + 1}: ${coupons[nextIdx].text}`;
+      } else {
+        upNextBox.style.display = 'flex';
+        upNextText.innerHTML = '🎉 <strong style="color:var(--rose);">All 12 collected!</strong> Every coupon is valid with Sononono forever.';
+      }
+
+      renderCouponDots();
+    }
+
+    function pullNextCouponStep() {
+      playTone(480, 0.15, 'triangle');
+      const box = document.getElementById('couponBox');
+      box.classList.add('pop');
+      setTimeout(() => box.classList.remove('pop'), 300);
+
+      if (currentCouponIdx < coupons.length - 1) {
+        currentCouponIdx++;
+        if (currentCouponIdx > maxCouponUnlocked) {
+          maxCouponUnlocked = currentCouponIdx;
+        }
+        if (currentCouponIdx === coupons.length - 1) {
+          fireFireworks();
+        } else {
+          fireBurst(0.5, 0.55);
+        }
+      } else {
+        currentCouponIdx = 0;
+        fireBurst(0.5, 0.55);
+      }
+      updateCouponUI();
+    }
+
+    function prevCoupon() {
+      if (currentCouponIdx > 0) {
+        currentCouponIdx--;
+        playTone(380, 0.1);
+        updateCouponUI();
+      }
+    }
+
+    function nextCouponStep() {
+      if (currentCouponIdx < coupons.length - 1) {
+        currentCouponIdx++;
+        if (currentCouponIdx > maxCouponUnlocked) {
+          maxCouponUnlocked = currentCouponIdx;
+        }
+        playTone(420, 0.1);
+        updateCouponUI();
+      }
+    }
+
+    function selectCoupon(idx) {
+      currentCouponIdx = idx;
+      if (idx > maxCouponUnlocked) {
+        maxCouponUnlocked = idx;
+      }
+      playTone(400, 0.1);
+      updateCouponUI();
+    }
+
+    function copyCurrentCoupon() {
+      const c = coupons[currentCouponIdx];
+      navigator.clipboard.writeText(`🎟️ Birthday Coupon #${currentCouponIdx + 1} of ${coupons.length}: "${c.text}" (Code: ${c.code})`);
+      alert(`Copied Coupon #${currentCouponIdx + 1} to clipboard!`);
+    }
+
+    // Initialize coupon dots on load
+    updateCouponUI();
+
+    // Heart Catcher Mini-Game (100% working with reliable animation and score)
+    let score = 0;
+    let timeLeft = 20;
+    let isPlaying = false;
+    let spawnTimer = null;
+    let gameClock = null;
+    let highScore = parseInt(localStorage.getItem('bday_best_score') || '0', 10);
+    document.getElementById('bestDisplay').textContent = highScore;
+
+    function toggleGame() {
+      if (isPlaying) {
+        endGame();
+      } else {
+        startGame();
+      }
+    }
+
+    function startGame() {
+      isPlaying = true;
+      score = 0;
+      timeLeft = 20;
+      document.getElementById('scoreDisplay').textContent = score;
+      document.getElementById('timeDisplay').textContent = timeLeft;
+      document.getElementById('gameMessage').textContent = '';
+      document.getElementById('gameBtn').textContent = 'Stop Game ⏹';
+      document.getElementById('arena').innerHTML = '';
+
+      // Spawner
+      spawnTimer = setInterval(spawnHeart, 500);
+
+      // Clock
+      gameClock = setInterval(() => {
+        timeLeft--;
+        document.getElementById('timeDisplay').textContent = timeLeft;
+        if (timeLeft <= 0) {
+          endGame();
+        }
+      }, 1000);
+    }
+
+    function spawnHeart() {
+      if (!isPlaying) return;
+      const arena = document.getElementById('arena');
+      const heart = document.createElement('div');
+      heart.className = 'heart-target';
+      const emojis = ['💗', '💖', '💘', '💝'];
+      const points = [1, 2, 3, 5];
+      const roll = Math.floor(Math.random() * emojis.length);
+      heart.textContent = emojis[roll];
+      heart.dataset.pts = points[roll];
+
+      heart.style.left = (6 + Math.random() * 82) + '%';
+      const speed = 2.2 + Math.random() * 1.5;
+      heart.style.animationDuration = speed + 's';
+
+      const hit = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        if (!isPlaying) return;
+        score += parseInt(heart.dataset.pts, 10);
+        document.getElementById('scoreDisplay').textContent = score;
+        playTone(500 + score * 15, 0.1);
+        heart.remove();
+      };
+
+      heart.addEventListener('pointerdown', hit);
+      heart.addEventListener('click', hit);
+      arena.appendChild(heart);
+
+      setTimeout(() => { heart.remove(); }, speed * 1000);
+    }
+
+    function endGame() {
+      isPlaying = false;
+      clearInterval(spawnTimer);
+      clearInterval(gameClock);
+      document.getElementById('arena').innerHTML = '';
+      document.getElementById('gameBtn').textContent = 'Play Again 🎮';
+
+      if (score > highScore) {
+        highScore = score;
+        localStorage.setItem('bday_best_score', highScore);
+        document.getElementById('bestDisplay').textContent = highScore;
+      }
+
+      fireBurst(0.5, 0.5);
+      const msg = score >= 20
+        ? `Legendary! ${score} points! You already have my whole heart though 😉`
+        : score >= 12
+        ? `${score} points, nice catch Handsome! Want to try beating it? 💖`
+        : `${score} points. Try again, I believe in you! 🫶`;
+      document.getElementById('gameMessage').textContent = msg;
+    }
+
+    // Love Letter
+    let letterOpened = false;
+    const letterText = `Dear Muslim Uddin Babu,
+Happy Birthday, Handsome🎂💖.
+
+Sometimes, I wonder how one person can become such an important part of another person's life. And then I think of you. Somehow, you've become a part of my happiness, my thoughts, my prayers, and obviously my scars, my runner without any destination,😜
+
+I may not always find the perfect words to express what you mean to me, but I hope my love makes you feel valued, understood, and appreciated. You deserve a love that brings you peace, a life that makes you proud, and happiness that stays even on your hardest days. If I could give you one thing today, it would be the ability to see yourself through my eyes. Maybe then you'd understand just how special you are to me.
+
+On your birthday, I pray that Allah protects you, guides you, blesses your efforts, and grants you everything that is good for you.
+
+Thank you for being someone my heart holds so dearly.
+
+Happy Birthday, my handsome boy. No matter how many birthdays pass, I hope my love always finds a way to make you feel special.
+
+Now come here and collect your hugs & kisses Bebs🫣💋
+
+Your Sononono.`;
+
+    function openLetter() {
+      if (letterOpened) return;
+      letterOpened = true;
+      document.getElementById('envFlap').textContent = '💖';
+      const paper = document.getElementById('letterPaper');
+      paper.classList.add('open');
+
+      playTone(400, 0.4, 'triangle');
+      fireBurst(0.5, 0.45);
+
+      const target = document.getElementById('letterContent');
+      let i = 0;
+      const typeInterval = setInterval(() => {
+        i += 3;
+        target.textContent = letterText.slice(0, i);
+        if (i >= letterText.length) {
+          clearInterval(typeInterval);
+          target.textContent = letterText;
+        }
+      }, 15);
+    }
+
+    // Ambient floating balloons
+    function spawnAmbientBalloon() {
+      const b = document.createElement('div');
+      b.className = 'ambient-balloon';
+      const emojis = ['🎈', '💖', '✨', '🎉', '🌸'];
+      b.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+      b.style.left = (3 + Math.random() * 92) + '%';
+      const dur = 9 + Math.random() * 6;
+      b.style.animationDuration = dur + 's';
+      b.onclick = (e) => {
+        playTone(300, 0.05, 'square');
+        fireBurst(e.clientX / window.innerWidth, e.clientY / window.innerHeight);
+        b.remove();
+      };
+      document.body.appendChild(b);
+      setTimeout(() => { b.remove(); }, dur * 1000);
+    }
+    for (let k = 0; k < 4; k++) setTimeout(spawnAmbientBalloon, k * 800);
+    setInterval(spawnAmbientBalloon, 4500);
+  </script>
+</body>
+</html>
